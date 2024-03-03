@@ -127,58 +127,6 @@ class _AppState extends State<App> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
 
-
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-
-                SizedBox(width: 20,),
-
-
-            Text(
-              '1',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 40.0,
-                  color: Colors.white
-              ),
-            ),
-
-
-            Text(
-              '2',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 40.0,
-                  color: Colors.white
-              ),
-            ),
-
-
-            Text(
-              '3',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 40.0,
-                  color: Colors.white
-              ),
-            ),
-
-
-            Text(
-              '4',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 40.0,
-                  color: Colors.white
-              ),
-            ),
-
-                SizedBox(width: 20,),
-
-          ]),
-
           const SizedBox(height: 100,),
 
           Text(
