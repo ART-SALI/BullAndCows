@@ -53,23 +53,22 @@ class BullAndCows {
       _realNumber = '';
       _activeButtonText = 'Підтвердити число';
       var rand = Random();
-      for (var i = 0; i < 4; i++) {
-        int r0 = rand.nextInt(9);
-        int r1 = rand.nextInt(9);
-        while (r1 == r0) {
-          r1 = rand.nextInt(9);
-        }
-        int r2 = rand.nextInt(9);
-        while (r2 == r0 || r2 == r1) {
-          r2 = rand.nextInt(9);
-        }
-        int r3 = rand.nextInt(9);
-        while (r3 == r0 || r3 == r1 || r3 == r2) {
-          r3 = rand.nextInt(9);
-        }
+      int r0 = rand.nextInt(9);
+      int r1 = rand.nextInt(9);
+      while (r1 == r0) {
+        r1 = rand.nextInt(9);
+      }
+      int r2 = rand.nextInt(9);
+      while (r2 == r0 || r2 == r1) {
+        r2 = rand.nextInt(9);
+      }
+      int r3 = rand.nextInt(9);
+      while (r3 == r0 || r3 == r1 || r3 == r2) {
+        r3 = rand.nextInt(9);
+      }
         _realNumber =
             r0.toString() + r1.toString() + r2.toString() + r3.toString();
-      }
+
       print(_realNumber);
   }
 
