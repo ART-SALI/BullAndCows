@@ -11,10 +11,15 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  BullAndCows game = BullAndCows();
+  BullAndCows game = BullAndCows(0, 'Тут буде виводитися інформація щодо биків та корів');
   final myController = TextEditingController();
   String? textInfo;
   String buttonText = 'Розпочати гру';
+
+  TextStyle globalTextStyle = const TextStyle(
+      fontSize: 20.0,
+      color: Colors.white
+  );
 
 
 
@@ -58,60 +63,16 @@ class _AppState extends State<App> {
           Text(
             textInfo!,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 20.0,
-                color: Colors.white
-            ),
+            style: globalTextStyle,
           ),
 
           const SizedBox(height: 70,),
 
-
-          TextFormField(
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 20,
-                color: Colors.white
-            ),
-
-            controller: myController,
-
-            decoration: const InputDecoration(
-              filled: true,
-                fillColor: Colors.black38,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-
-            ),
-          ),
+          textFormField(),
 
           const SizedBox(height: 70,),
 
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.disabled)) {
-                      return Colors.red;
-                    }
-                    return Colors.black38;
-                  }),
-            ),
-            onPressed: () {
-              game.gamePlay(myController);
-              setState(() {
-                buttonText = game.activeButtonText;
-                textInfo = game.infoText();
-              });
-            },
-            child: Text(
-              buttonText,
-              style: const TextStyle(fontSize: 20,
-                  color: Colors.white),
-            ),
-          ),
+          gameButton(),
 
           const SizedBox(height: 200,),
 
@@ -119,5 +80,52 @@ class _AppState extends State<App> {
       ),
     );
 
+  }
+
+  TextFormField textFormField() {
+    return TextFormField(
+          textAlign: TextAlign.center,
+          style: globalTextStyle,
+
+          controller: myController,
+
+          decoration: const InputDecoration(
+            filled: true,
+              fillColor: Colors.black38,
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                borderSide: BorderSide(color: Colors.white),
+              ),
+
+          ),
+        );
+  }
+
+  ElevatedButton gameButton() {
+    return ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.disabled)) {
+                    return Colors.grey;
+                  }
+                  return Colors.black38;
+                }),
+          ),
+          onPressed: () {
+
+            game.gamePlay(myController);
+
+            setState(() {
+              buttonText = game.activeButtonText;
+              textInfo = game.infoText();
+            });
+
+          },
+          child: Text(
+            buttonText,
+            style: globalTextStyle,
+        )
+    );
   }
 }

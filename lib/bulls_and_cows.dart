@@ -8,7 +8,10 @@ class BullAndCows {
   String _realNumber = '';
   String _activeButtonText = 'Розпочати гру';
   int _gameStage = 0;
-  final String _startInfo = 'Тут буде виводитися інформація щодо биків та корів';
+  final String _startInfo;
+
+
+  BullAndCows(this._gameStage, this._startInfo);
 
   int get gameStage => _gameStage;
 
