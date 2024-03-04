@@ -1,5 +1,5 @@
+import 'package:first_project/bulls_and_cows.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 class App extends StatefulWidget {
 
@@ -11,40 +11,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final String startInfo = 'Тут буде виводитися інформація щодо биків та корів';
+  BullAndCows game = BullAndCows();
   final myController = TextEditingController();
-  int gameStage = 0;
-  String? currentInfo;
-  String? currentNumber;
-  String realNumber= '';
-  String activeButtonText = 'Розпочати гру';
+  String? textInfo;
+  String buttonText = 'Розпочати гру';
 
-  void randGenerating(){
-    setState(() {
-      activeButtonText = 'Підтвердити відповідь';
-      gameStage = 1;
-      realNumber = '';
-      var rand = Random();
-      for (var i = 0; i < 4; i++) {
-        int r0 = rand.nextInt(9);
-        int r1 = rand.nextInt(9);
-        while(r1 == r0){
-          r1 = rand.nextInt(9);
-        }
-        int r2 = rand.nextInt(9);
-        while(r2 == r0 || r2 == r1){
-          r2 = rand.nextInt(9);
-        }
-        int r3 = rand.nextInt(9);
-        while(r3 == r0 || r3 == r1 || r3 == r2){
-          r3 = rand.nextInt(9);
-        }
-        realNumber = r0.toString() + r1.toString() + r2.toString() + r3.toString();
-      }
-      print(realNumber);
-    });
 
-  }
+
 
 
   @override
@@ -57,55 +30,7 @@ class _AppState extends State<App> {
     );
   }
 
-  String infoText(){
-    if(currentInfo == null){
-      return startInfo;
-    }
-    return currentInfo!;
-  }
 
-  void checking() {
-    setState(() {
-      if (myController
-          .text
-          .length != 4) {
-        print('-1');
-        currentInfo = "Ви маєте написити чотири унікальні цифри";
-      } else {
-        currentNumber = myController.text;
-        bool u = true;
-        for(int i = 0; i < 3; i++){
-          if(currentNumber!.contains(currentNumber![i], i+1)){
-            print('-2');
-            currentInfo = "Ви маєте написити чотири унікальні цифри";
-            u = false;
-            break;
-          }
-        }
-        if(u) {
-          int bullNumber = 0;
-          int cowNumber = 0;
-          for (int i = 0; i < 4; i++) {
-            if (realNumber[i] == currentNumber![i]) {
-              bullNumber++;
-            } else {
-              if (realNumber.contains(currentNumber![i])) {
-                cowNumber++;
-              }
-            }
-          }
-          if(bullNumber == 4){
-            activeButtonText = 'Розпочати нову гру';
-            currentInfo = 'ВИ ПЕРЕМОГЛИ!';
-            gameStage = 2;
-          } else{
-            currentInfo = '$bullNumber бика та $cowNumber корів';
-          }
-          }
-        }
-
-    });
-  }
 
   AppBar _appBar() {
     return AppBar(
@@ -120,6 +45,7 @@ class _AppState extends State<App> {
   }
 
   Widget _mainBody(){
+    textInfo ??= game.infoText();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -130,7 +56,7 @@ class _AppState extends State<App> {
           const SizedBox(height: 100,),
 
           Text(
-            infoText(),
+            textInfo!,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 20.0,
@@ -174,16 +100,14 @@ class _AppState extends State<App> {
                   }),
             ),
             onPressed: () {
-              if(gameStage == 0) {
-                randGenerating();
-              }else if(gameStage == 1){
-                checking();
-              }else{
-                randGenerating();
-              }
+              game.gamePlay(myController);
+              setState(() {
+                buttonText = game.activeButtonText;
+                textInfo = game.infoText();
+              });
             },
             child: Text(
-              activeButtonText,
+              buttonText,
               style: const TextStyle(fontSize: 20,
                   color: Colors.white),
             ),
