@@ -72,14 +72,14 @@ class BullAndCows {
       print(_realNumber);
   }
 
-  void checking(TextEditingController myController) {
-      if (myController
+  void checking({required TextEditingController inputController}) {
+      if (inputController
           .text
           .length != 4) {
         print('-1');
         _currentInfo = "Ви маєте написити чотири унікальні цифри";
       } else {
-        _currentNumber = myController.text;
+        _currentNumber = inputController.text;
         bool uniqueNumbers = true;
         for(int i = 0; i < 3; i++){
           if(_currentNumber!.contains(_currentNumber![i], i+1)){
@@ -113,12 +113,20 @@ class BullAndCows {
 
   }
 
+  void surrender(){
+    _activeButtonText = 'Розпочати нову гру';
+    _currentInfo = 'Правильна відповідь:$_realNumber';
+    _gameStage = 2;
+  }
+
   void gamePlay(TextEditingController myController){
     if(_gameStage == 0) {
       randGenerating();
     }else if(_gameStage == 1){
-      checking(myController);
-    }else{
+      checking(inputController: myController);
+    } if(_gameStage == 3){
+      surrender();
+    } else{
       randGenerating();
     }
   }

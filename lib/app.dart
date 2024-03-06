@@ -58,7 +58,7 @@ class _AppState extends State<App> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
 
-          const SizedBox(height: 100,),
+          const SizedBox(height: 60,),
 
           Text(
             textInfo!,
@@ -66,13 +66,17 @@ class _AppState extends State<App> {
             style: globalTextStyle,
           ),
 
-          const SizedBox(height: 70,),
+          const SizedBox(height: 45,),
 
           textFormField(),
 
-          const SizedBox(height: 70,),
+          const SizedBox(height: 30,),
 
           gameButton(),
+
+          const SizedBox(height: 30,),
+
+          surrenderButton(),
 
           const SizedBox(height: 200,),
 
@@ -125,6 +129,35 @@ class _AppState extends State<App> {
           child: Text(
             buttonText,
             style: globalTextStyle,
+        )
+    );
+  }
+
+  ElevatedButton surrenderButton() {
+    return ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                  (Set<MaterialState> states) {
+                if (states.contains(MaterialState.disabled)) {
+                  return Colors.grey;
+                }
+                return Colors.black38;
+              }),
+        ),
+        onPressed: () {
+
+          game.gameStage = 3;
+          game.gamePlay(myController);
+
+          setState(() {
+            buttonText = game.activeButtonText;
+            textInfo = game.infoText();
+          });
+
+        },
+        child: Text(
+          'Здатися',
+          style: globalTextStyle,
         )
     );
   }
